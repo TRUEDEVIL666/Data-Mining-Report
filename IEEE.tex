@@ -1,0 +1,164 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{nohyperref}
+\newcommand{\BibTeX}{\textrm{B \kern -.05em \textsc{i \kern -.025em b} \kern -.08em
+T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
+\begin{document}
+
+    \title{Mining Massive Data Sets Midterm Report}
+
+    \author{
+        \IEEEauthorblockN{1\textsuperscript{st} 522H0036 - Luong Canh Phong}
+        \IEEEauthorblockA{
+            \textit{Faculty of Information Technology} \\
+            \textit{Ton Duc Thang University}\\
+            Ho Chi Minh City, Vietnam \\
+            522H0036@student.tdtu.edu.vn
+        }
+        \and
+        \IEEEauthorblockN{2\textsuperscript{nd} 520H0341 - Nguyen Thai Bao}
+        \IEEEauthorblockA{
+            \textit{Faculty of Information Technology} \\
+            \textit{Ton Duc Thang University}\\ \
+            Ho Chi Minh City, Vietnam \\
+            520H0341@student.tdtu.edu.vn
+        }
+        \and
+        \IEEEauthorblockN{3\textsuperscript{rd} 522H0030 - Le Tan Huy}
+        \IEEEauthorblockA{
+            \textit{Faculty of Information Technology} \\
+            \textit{Ton Duc Thang University}\\
+            Ho Chi Minh City, Vietnam \\
+            522H0030@student.tdtu.edu.vn
+        }
+        \and
+        \IEEEauthorblockN{4\textsuperscript{th} 522H0008 - Dao Minh Phuc}
+        \IEEEauthorblockA{
+            \textit{Faculty of Information Technology} \\
+            \textit{Ton Duc Thang University}\\
+            Ho Chi Minh City, Vietnam \\
+            522H0008@student.tdtu.edu.vn
+        }
+        \and
+        \IEEEauthorblockN{5\textsuperscript{th} 522H0136 - Nguyen Nhat Phuong Anh}
+        \IEEEauthorblockA{
+            \textit{Faculty of Information Technology} \\
+            \textit{Ton Duc Thang University}\\
+            Ho Chi Minh City, Vietnam \\
+            5220136@student.tdtu.edu.vn
+        }
+    }
+
+    \maketitle
+
+    \begin{abstract}
+        Spam emails are a common problem seen on the internet as it is an annoyance in daily life and a cyber security risks to any sensitive and important data of a person or an organization/business.
+        With the number of spam emails increasing more and more significantly over the past few years, many more algorithms are created and improved in spam detection efficiency.
+        Overall, this paper goes through the basic understanding of spam emails, understanding the necessity of a spam classification algorithm, and learn more about the methodologies, its effectiveness and usefulness when detecting spam emails.
+    \end{abstract}
+
+    \section{Introduction}
+    \label{sec:introduction}
+    Since the birth of the Internet, spam email has been a common occurrence.
+    Along with the rapid growth and widespread of the Internet, the frequency has been increasing significantly, especially over the past decade.
+    In addition to being nuisances, a waste of time and email storage, spam emails can be sent with malicious intent of stealing information, hijacking devices by storing malware within the content of the email itself.
+    And with the nature of email spam being sent by botnets, it isn't easy to avoid the situation due to a new bot can be easily created in case another one got blocked or banned on the site.
+    A common way how most platforms (such as Gmail, Yahoo!, Outlook) handle these spams is to develop a Machine Learning (ML) model to detect and get rid of the spam emails, lowering the number of spams getting into the inbox.
+
+    \section{Importance of Spam Classification}
+    \label{sec:importance-of-spam-classification}
+    \input{sections/importance-of-spam-classification}
+
+    \section{Recent Advances in Spam Classification}(TBA)
+    \label{sec:recent-advances-in-spam-classification}
+
+%    \section{Second Task: PCY Algorithm for Frequent Items}
+%    \label{sec:second-task}
+%%    \input{sections/second-task}
+%
+%    \section{Third Task: MinHashLSH for Similar Dates}
+%    \label{sec:third-task}
+%%    \input{sections/third-task}
+%
+%    \section{Contribution}
+%    \label{sec:contribution}
+%
+%    The following table represents the contribution of each member, note that whichever member handles whichever task will also write the report for that task.
+%
+%    \begin{table}[h]
+%        \centering
+%        \caption{Members Contributions}
+%        \setlength{\tabcolsep}{2pt} % Reduce column spacing
+%        \renewcommand{\arraystretch}{1} % Adjust row spacing
+%        \resizebox{240}{!}{ % Fit within column width
+%            \begin{tabular}{|l|c|c|c|}
+%                \hline
+%                \textbf{ID} & \textbf{Member} & \textbf{Contribution} & \textbf{Progress}\\
+%                \hline
+%                522H0036 & Luong Canh Phong & Task 1 and Handling Report & 100\%\\
+%                522H0092 & Cao Nguyen Thai Thuan & Overseer and Report Support & 100\%\\
+%                522H0075 & Tang Minh Thien An & Task 3 & 100\%\\
+%                522H0167 & Truong Tri Phong & Task 2 & 100\%\\
+%                \hline
+%            \end{tabular}
+%        }
+%        \label{tab:contributions}
+%    \end{table}
+%
+%    \section{Self-evaluation}
+%    \label{sec:self-evaluation}
+%
+%    The following table is our self-evaluation on our tasks:
+%
+%    \begin{table}[h]
+%        \centering
+%        \caption{Self-evaluation}
+%        \setlength{\tabcolsep}{2pt} % Reduce column spacing
+%        \renewcommand{\arraystretch}{1} % Adjust row spacing
+%        \resizebox{240}{!}{ % Fit within column width
+%            \begin{tabular}{|l|c|c|c|}
+%                \hline
+%                \textbf{Task} & \textbf{Task Requirements} & \textbf{Completion Ratio}\\
+%                \hline
+%                Task 1 & A-Priori Algorithm for Frequent Customers & 100\%\\
+%                Task 2 & PCY Algorithm for Frequent Items & 95\%\\
+%                Task 3 & MinHashLSH for Similar Dates & 90\%\\
+%                Task 4 & Report & 100\%\\
+%                \hline
+%            \end{tabular}
+%        }
+%        \label{tab:self-evaluation}
+%    \end{table}
+%
+%    \section{Conclusion}
+%    \label{sec:conclusion}
+%    We have gone through a variety of techniques and algorithms used in the world of data mining.
+%    For the first task, we have to find same-day customers and utilize the A-Priori algorithm to find frequent pairs of customers that shop on the same date and save the output of each pass in a dedicated folder.
+%    As we run though the code, the result after sorting is a reasonable ascending list of frequent customer pairs.
+%    For the second task, store the given dataset locally and identify baskets, as well as implementing the PCY algorithm to find frequent pairs along with generating metadata with predetermined constraints, the results for this task are two separate lists, one containing all frequent pairs, and the other is a list of association rules based on the user's given support threshold and confidence value.
+%    And finally, implement and compare between a traditional and an alternative MinHashLSH function to understand and have a greater insight into how the frequent pairs searching is done.
+%    We can see that with a slight modification and a different way of merging, it can result in a notably higher efficiency and better results.
+%
+%    \begin{thebibliography}{00}
+%        \bibitem{b12} Tpoint Tech, ``Apriori Algorithm, ''\\\
+%        [Online]. Available: \href{https://www.tpointtech.com/apriori-algorithm}{https://www.tpointtech.com/apriori-algorithm}
+%        \bibitem{b6} Databricks, ``MapReduce, '' Databricks Glossary, 2025.\\\
+%        [Online]. Available: \href{https://www.databricks.com/glossary/mapreduce}{https://www.databricks.com/glossary/mapreduce}
+%        \bibitem{b1} J. S. Park and M. S. Chen, ``Using a hash table to eliminate candidates in a frequent itemset mining algorithm, '' \textit{IEEE Trans. Knowl. Data Eng.}, vol. 7, no. 3, pp. 464--472, 1995.
+%        \bibitem{b2} J. Han, J. Pei, and Y. Yin, ``Mining frequent patterns without candidate generation, '' \textit{ACM SIGMOD Rec.}, vol. 29, no. 2, pp. 1--12, 2000.
+%        \bibitem{b3} PySpark Documentation, ``PySpark API Documentation, '' 2025.\\\
+%        [Online]. Available: \url{https://spark.apache.org/docs/latest/api/python}
+%        \bibitem{b4} PySpark Documentation, ``pyspark.ml.feature.MinHashLSH, '' Apache Spark, 2025.\\\
+%        [Online]. Available: \href{https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.feature.MinHashLSH}{https://spark.apache.org/docs/latest/api/python/refer\-ence/api/pyspark.ml.feature.MinHashLSH}
+%        \bibitem{b5} Amazon Web Services, ``Jaccard similarity, '' AWS Neptune Analytics Documentation, 2024.\\\
+%        [Online]. Available: \href{https://docs.aws.amazon.com/neptune-analytics/latest/userguide/jaccard-similarity.html}{https://docs.aws.amazon.com/neptune-analytics/latest/userguide/jaccard-similarity.html}
+%    \end{thebibliography}
+\end{document}
