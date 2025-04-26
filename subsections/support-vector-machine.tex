@@ -1,0 +1,131 @@
+SVM is a supervised machine learning algorithm used for classification and regression, though it is primarily applied to classification tasks.
+The core idea of SVM is to find the optimal hyperplane that best separates data points of different classes in a high-dimensional space, maximizing the margin between the classes.
+For cases where data is not linearly separable, SVM uses the kernel trick to transform the data into a higher-dimensional space where a linear boundary can be established.
+
+SVM is known for its robustness and effectiveness in handling high-dimensional datasets and is widely used in tasks like text classification, image recognition, and bioinformatics.
+
+\subsubsection{Basic Components}\textbf{}
+
+\smallskip
+\textbf{Hyperplane}: A decision boundary that separates data points of different classes.
+In d-dimensional space, a hyperplane is defined by $w^t +b = 0$, where w is the weight vector, b is the bias, and x is the input vector.
+
+\textbf{Margin}: The distance between the hyperplane and the nearest data point from either class.
+SVM aims to maximize this margin.
+
+\textbf{Support Vectors}: The data points closest to the hyperplane, which define the margin and are critical to determining the hyperplane’s position.
+
+\textbf{Kernel Function}: A function that transforms non-linearly separable data into a higher-dimensional space where a linear boundary can be found (e.g., linear, polynomial, or radial basis function (RBF) kernels).
+
+\textbf{Regularization Parameter $(C)$}: Controls the trade-off between maximizing the margin and minimizing classification errors.
+
+\textbf{Slack Variables}: Allow for some misclassification in soft-margin SVM to handle non-linearly separable data.
+
+\smallskip
+\subsubsection{Detailed Algorithm}\textbf{}
+
+\begin{enumerate}[label=Step \arabic*:, align=left, leftmargin=20pt,labelsep=1em]
+    \item Data Preparation
+    \begin{itemize}
+        \item Assume an original dataset
+            \[D = \{ (x_1, y_1), (x_2, y_2), \dots, (x_N, y_N) \}\]
+            where $x_i \in \mathbb{R}^d$ (feature vector with $d$ dimensions) and $y_i \in \{-1, +1\}$ (binary class labels).
+    \end{itemize}
+
+    \item Define the Objective
+
+    \smallskip
+    Hard-Margin SVM (Linearly Separable Data):
+    \begin{itemize}
+        \item Find the hyperplane $w^T x + b = 0$ that separates the classes with the maximum margin.
+        \item The margin is defined as the distance from the hyperplane to the nearest data point, given by $\frac{2}{\|w\|}$, where $\|w\| = \sqrt{w^T w}$.
+        \item Objective: Maximize the margin, i.e., minimize $\frac{1}{2} \|w\|^2$, subject to:
+            \[y_i (w^T x_i + b) \geq 1, \quad \forall i = 1, \dots, N\]
+    \end{itemize}
+
+    \smallskip
+    Soft-Margin SVM (Non-Linearly Separable Data):
+    \begin{itemize}
+        \item Introduce slack variables $\xi_i \geq 0$ to allow some misclassification.
+        \item Objective: Minimize:
+            \[\frac{1}{2} \|w\|^2 + C \sum_{i=1}^N \xi_i\]
+            Subject to:
+            \[y_i (w^T x_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0, \quad \forall i\]
+            where $C$ is the regularization parameter controlling the trade-off between margin maximization and classification error.
+    \end{itemize}
+
+    \item Solve the Optimization Problem
+
+    \smallskip
+    \begin{itemize}
+        The optimization problem is typically solved in its \textbf{dual form} using Lagrange multipliers to handle constraints efficiently.
+        \item Dual Problem:
+        \begin{itemize}
+            \item Introduce Lagrange multipliers $\alpha_i \geq 0$.
+            \item The dual optimization problem is:
+        \end{itemize}
+
+        Maximize
+        \[L(\alpha) = \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i^T x_j)\]
+
+        Subject to:
+        \[\sum_{i=1}^N \alpha_i y_i = 0, \quad 0 \leq \alpha_i \leq C, \quad \forall i\]
+
+        \item The solution $\alpha_i$ determines the weight vector:
+            \[w = \sum_{i=1}^N \alpha_i y_i x_i\]
+        \item The bias $b$ is computed using support vectors (where $\alpha_i > 0$).
+        \item Support vectors are the points where $y_i(w^T x_i + b) = 1$ (on the margin) or $\xi_i > 0$ (misclassified or within the margin).
+    \end{itemize}
+
+    \item Handle Non-Linear Data with Kernels
+    \begin{itemize}
+        For non-linearly separable data, map the input data to a higher-dimensional space using a kernel function $K(x_i, x_j)$.
+        \item Common kernels:
+        \begin{itemize}
+            \item Linear Kernel:
+                \[K(x_i, x_j) = x_i^T x_j\]
+            \item Polynomial Kernel:
+                \[K(x_i, x_j) = (x_i^T x_j + c)^d\]
+            \item Radial Basis Function (RBF) Kernel:
+                \[K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)\]
+        \end{itemize}
+
+        \item The dual problem becomes: Maximize
+            \[L(\alpha) = \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j K(x_i, x_j)\]
+            Subject to the same constraints as above.
+    \end{itemize}
+
+    \item Prediction
+
+    For a new input $x$:
+    \begin{itemize}
+        \item Compute the decision function:
+            \[f(x) = \sum_{i \in \text{SV}} \alpha_i y_i K(x_i, x) + b\]
+            where SV is the set of support vectors.
+        \smallskip
+        \item Predict the class:
+            \[\hat{y} = sign(f(x))\]
+        \item For probability estimates (if enabled), use techniques like Platt scaling to convert f(x) into probabilities
+    \end{itemize}
+\end{enumerate}
+
+\smallskip
+\subsubsection{Advantages}\textbf{}
+
+\begin{itemize}
+    \item Effective in High-Dimensional Spaces: Works well with datasets having many features (e.g., text classification).
+    \item Robust to Outliers: Maximizing the margin focuses on support vectors, ignoring points far from the boundary.
+    \item Flexible with Kernels: The kernel trick allows SVM to handle non-linearly separable data effectively.
+    \item Global Optimization: The convex optimization problem ensures a unique solution.
+    \item Sparse Solution: Only support vectors (a subset of the data) determine the model, making it memory-efficient.
+\end{itemize}
+
+\subsubsection{Disadvantages}\textbf{}
+
+\begin{itemize}
+    \item Computationally Expensive: Training time scales poorly with large datasets ($O(N^2) to O(N^3)$ for solving the quadratic optimization problem).
+    \item Sensitive to Parameter Tuning: Requires careful tuning of $C$ and kernel parameters (e.g., γ for RBF kernel).
+    \item Not Interpretable: The resulting hyperplane and support vectors are not as intuitive as decision trees.
+    \item Poor with Noisy Data: Overlapping classes or noisy data can degrade performance.
+    \item Not Ideal for Large Datasets: Due to high computational cost, SVM is less suitable for massive datasets compared to models like Random Fores
+\end{itemize}

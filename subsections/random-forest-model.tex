@@ -1,0 +1,126 @@
+Random Forest is a popular machine learning model in the Ensemble Learning family, used for both classification and regression tasks.
+It consists of a collection of decision trees trained on different subsets of data, with the final prediction aggregated from these trees.
+The core idea is to combine multiple weak learners (individual decision trees) into a strong learner with higher accuracy and reduced overfitting compared to a single decision tree.
+
+Random Forest relies on two key principles:
+
+\begin{itemize}
+    \item \textbf{Bagging (Bootstrap Aggregating)}: Creates multiple data subsets by randomly sampling with replacement from the original dataset.
+    \item \textbf{Feature Randomness}: At each split in a decision tree, only a random subset of features is considered.
+\end{itemize}
+
+\subsubsection{Basic Components}\text{}
+
+\smallskip
+\textbf{Decision Tree}: The fundamental unit of Random Forest.
+Each tree is built independently on a data subset.
+
+\textbf{Forest}: A collection of many decision trees (typically hundreds or thousands).
+
+\textbf{Bootstrap Sample}: Each tree is trained on a randomly sampled subset of the original dataset.
+
+\textbf{Random Feature Subset}: At each node, only a random subset of features is evaluated for the best split.
+
+\smallskip
+\subsubsection{Detailed Algorithm}\text{}
+
+Here are the specific steps to construct and use a Random Forest:
+
+\begin{enumerate}[label=Step \arabic*:, align=left, leftmargin=20pt,labelsep=1em]
+    \item Data Preparation
+    \begin{itemize}
+        \item Assume an original dataset $D$ with $N$ samples and $M$ features.
+    \end{itemize}
+
+    \item Create Bootstrap Samples
+    \begin{itemize}
+        \item Generate $T$ subsets $D1, D2, \ldots,DT$ (where $T$ is the number of trees), each of size $N$, by randomly sampling with replacement from $D$.
+        \item Due to sampling with replacement, some samples may appear multiple times, while others may not appear (approximately 36.8\% of the data is left out, called Out-of-Bag (OOB) data).
+    \end{itemize}
+
+    \item Build Each Decision Tree
+    \begin{itemize}
+        \item For each subset $D_t$:
+        \begin{enumerate}
+            \item Initialize a decision tree: Trees are grown fully without pruning.
+            \item At each node:
+            \begin{itemize}
+                \item Randomly select a subset of $m$ features from the total $M$ features ($m \textless M$). Typically:
+                \begin{itemize}
+                    \item For classification: $m = \sqrt{M}$
+                    \item For regression: $m = M/3$
+                \end{itemize}
+                \item Find the best feature among these $m$ features to split the node, based on criteria like Gini Index, Entropy (classification), or Mean Squared Error (regression).
+            \end{itemize}
+            \item Repeat the splitting process until the tree is complete (reaches maximum depth or cannot split further).
+        \end{enumerate}
+        \item Result: $T$ independent decision trees.
+    \end{itemize}
+
+    \item Aggregate Results
+
+    \smallskip
+    For classification:
+    \begin{itemize}
+        \item Each tree predicts a class.
+        \item The final class is the one with the most votes (Majority Voting).
+    \end{itemize}
+
+    \smallskip
+    For regression:
+    \begin{itemize}
+        \item Each tree predicts a numerical value.
+        \item The final value is the average of all predictions.
+    \end{itemize}
+
+    \item Model Evaluation (Using OOB Error)
+    \begin{itemize}
+        \item OOB data (not used to train a given tree) is used to test the performance of each tree.
+        \item Aggregate OOB results to estimate the overall accuracy of the Random Forest without a separate test set.
+    \end{itemize}
+\end{enumerate}
+
+\smallskip
+\subsubsection{Mathematical Formulas}\text{}
+
+There are splitting criteria at each node in the tree, and it is different for each task.
+
+\textbf{For Classification:}
+\begin{itemize}
+    \item Gini Index:
+        \[Gini = 1 - \sum_{i=1}^C{p_i^2}\]
+        where $p_i$ is the proportion of class $i$ in the node.
+    \item Entropy:
+        \[Entropy = - \sum_{i=1}^C{p_i \log_2{p_i}}\]
+    \item Final Result:
+        \[\hat{y} = mode(\hat{y}_1, \hat{y}_2, \ldots, \hat{y}_t)\]
+        where $\hat{y}_t$ is the prediction from a tree $t$.
+\end{itemize}
+
+\textbf{For Regression:}
+\begin{itemize}
+    \item Splitting criterion: Minimize Mean Squared Error:
+        \[MSE = \frac{1}{n} \sum_{i=1}^n{(y_i - \hat{y}_i)^2}\]
+    \item Final Result:
+        \[\hat{y} = \frac{1}{T} \sum_{t=1}^T{\hat{y}_t}\]
+\end{itemize}
+
+\smallskip
+\subsubsection{Advantages}
+
+\begin{itemize}
+    \item High accuracy due to combining multiple trees.
+    \item Resistance to overfitting thanks to randomness and aggregation.
+    \item Handles large datasets with many features and samples effectively.
+    \item No need for data normalization since it is based on decision trees.
+    \item Provides feature importance measurement based on impurity reduction.
+\end{itemize}
+
+\smallskip
+\subsubsection{Disadvantages}
+
+\begin{itemize}
+    \item Resource-intensive: Requires significant memory and computation for large numbers of trees.
+    \item Less interpretable than a single decision tree.
+    \item Reduced performance with linear data, where linear regression might be more suitable.
+\end{itemize}

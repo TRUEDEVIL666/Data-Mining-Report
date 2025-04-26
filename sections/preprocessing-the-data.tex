@@ -1,0 +1,142 @@
+This section focuses on preparing the dataset for machine learning by cleaning and transforming the text data.
+It includes removing unnecessary stop words, tokenizing the emails, and vectorizing the emails.
+
+\subsection{Removing unnecessary stopwords}
+\label{subsec:removing-unnecessary-stopwords}
+
+\textbf{stop\_words = set(stopwords.words('english'))}: This line creates a set called stop\_words.
+It uses the nltk library's stopwords module to get a list of common English words like ``the,'' ``a,'' ``is,'' etc., which are often removed from text data because they usually carry little meaningful information.
+These words are converted into a set for efficient lookup during the removal process.
+
+\textbf{puncture = set(string.punctuation)}: This line creates a set called puncture.
+It uses the string library's punctuation attribute to get a list of punctuation marks.
+Similar to stop\_words, these punctuation marks are converted into a set for efficient removal.
+
+\textbf{def remove\_stopwords(text)}: This line defines a function named remove\_stopwords that takes a single argument, text, representing the input text to be processed.
+
+\textbf{return ` '.join([word for word in text.split() if word not in stop\_words and word not in puncture])}: This line is the core of the function.
+It uses a list comprehension to filter out stopwords and punctuation from the input text:
+
+\begin{itemize}
+    \item text.split(): This splits the input text into a list of individual words.
+    \item if word not in stop\_words and word not in puncture: This condition checks if a word is not in either the stop\_words set or the puncture set.
+    \item \text{[}word for \dots if \dots\text{]}: This creates a new list containing only the words that passed the condition.
+    \item ` '.join(\ldots): This joins the words back together into a single string, separated by spaces.
+\end{itemize}
+
+Finally, the function returns this processed string (with stopwords and punctuation removed).
+This step helps to reduce noise and focus on more meaningful words for further analysis.
+
+\subsection{Tokenizing the emails}
+\label{subsec:tokenizing-the-emails}
+
+Each email was then tokenized, which involves splitting the text into individual words or tokens.
+
+\textbf{import spacy}: This line imports the spacy library, a popular Python library for NLP tasks.
+
+\textbf{nlp = spacy.load(`en\_core\_web\_sm')}: This line loads a specific language model within spaCy called en\_core\_web\_sm.
+This model is trained on a large English text dataset and is used for various NLP operations, including schematization
+
+\subsection{Defining and Applying the Lemmatization Function}
+\label{subsec:defining-and-applying-the-lemmatization-function}
+
+The next step involves reducing words to their base or root form, known as lemmatization, using the spaCy library.
+This helps standardize words for better analysis.
+
+\textbf{def lemmatize(email):}: This line defines a function named lemmatize that takes a single argument, ``email'', representing the input email text to be processed.
+
+\textbf{doc = nlp(email)}: Inside the function, this line uses the previously loaded spaCy language model (``nlp'') to process the input ``email'' text.
+The result, a spaCy Doc object containing tokens and their linguistic features, is stored in the ``doc'' variable.
+
+\textbf{return ` '.join(token.lemma\_ for token in doc)}: This line performs the lemmatization and returns the result.
+\begin{itemize}
+    \item ``token.lemma\_ for token in doc'': This iterates through each token (word) in the processed ``doc'' object and extracts its lemma (base form).
+    For example, ``running'' becomes ``run,'' ``studies'' become ``study.''
+    \item `` ` '.join(\ldots)'': This joins the extracted lemmas back together into a single string, separated by spaces.
+\end{itemize}
+The function returns this lemmatized string.
+
+\textbf{df['email'] = df['email'].apply(lemmatize)}: This line applies the ``lemmatize'' function to each entry in the ``email'' column of the pandas DataFrame named ``df''.
+The original email text in the column is replaced by its lemmatized version.
+
+This step is crucial for further analysis, as it allows the model to treat different forms of the same word (e.g., ``run,'' ``running,'' ``ran'') as a single concept, improving pattern recognition.
+
+\subsection{Removing duplicate words}
+\label{subsec:removing-duplicate-words}
+
+This code snippet aims to remove duplicate words from each email string within the ``email'' column of the DataFrame ``df'', while importantly maintaining the original order of the remaining words.
+
+\textbf{df[`email'] = \dots}: This part indicates that the result of the operation described on the right side will be assigned back to the ``email'' column of the ``df'' DataFrame, overwriting the previous content.
+
+\textbf{df[`email'].apply(\dots)}: The ``apply()'' method is used here to apply a specific function to each element (each email string) in the ``email'' column.
+
+\textbf{lambda x: \dots}: This defines an anonymous inline function (a lambda function).
+The function takes one argument, ``x'', which represents an individual email string from the column during the ``apply'' operation.
+
+\textbf{x.split()}: This part of the lambda function splits the input email string ``x'' into a list of individual words, using spaces as the default delimiter.
+
+\textbf{set(x.split())}: This converts the list of words obtained from ``x.split()'' into a Python set.
+A key property of sets is that they only store unique elements, so this step automatically removes any duplicate words present in the list.
+
+\textbf{sorted(\dots, key=x.split().index)}: This is the core part for preserving order.
+\begin{itemize}
+    \item ``sorted(\ldots)'': This function sorts the elements of the set (which contains only unique words).
+    \item ``key=x.split().index'': This is the crucial argument.
+    It tells ``sorted'' not to sort alphabetically, but based on the index (position) of each unique word in the *original* list created by ``x.split()''.
+    This effectively restores the initial sequence of words.
+\end{itemize}
+
+\textbf{` '.join(\dots)}: Finally, this joins the sorted (by original position), unique words back into a single string, with words separated by spaces.
+
+Removing duplicate words can be beneficial in text processing tasks as it helps reduce redundancy and noise in the data, potentially leading to improved model performance.
+Maintaining the original word order is important for preserving the contextual meaning of the email.
+
+\subsection{Vectorizing}
+\label{subsec:vectorizing}
+
+To represent the processed email text numerically, a technique called vectorization was employed.
+Specifically, TF-IDF (Term Frequency-Inverse Document Frequency) vectorization was used to convert the text into a numerical matrix that machine learning models can understand.
+This step is crucial for training models to recognize patterns and make predictions based on email content.
+
+\textbf{Creating the Vectorizer}
+
+\textbf{TfidfVectorizer}: This line imports or initializes the ``TfidfVectorizer'' class from the ``sklearn.feature\_extraction.text'' library.
+This class converts a collection of raw documents to a matrix of TF-IDF features.
+
+\textbf{min\_df=1}: This parameter is set during the initialization of ``TfidfVectorizer''.
+It specifies that a word must appear in at least one document (email, in this case) to be considered part of the vocabulary.
+Setting it to 1 includes all words that appear at least once (unless filtered by other parameters like ``max\_features'').
+
+\textbf{max\_features=1000}: This parameter limits the size of the vocabulary to the 1000 most frequent words across all emails, based on term frequency.
+This helps manage the dimensionality of the resulting vector space and focuses on potentially more informative terms.
+
+\textbf{Fitting and Transforming the Data:}
+
+\textbf{fit\_transform(df['email'])}: This method of the ``TfidfVectorizer'' object is called on the ``email'' column of the DataFrame.
+It performs two actions in sequence:
+\begin{itemize}
+    \item \textbf{fit}: It learns the vocabulary (the 1000 most frequent words meeting the ``min\_df'' criteria) from the provided email data.
+    It also calculates the Inverse Document Frequency (IDF) for each word in the learned vocabulary.
+    \item \textbf{transform}: It converts each email in the ``df['email']'' column into a numerical vector.
+    Each element in the vector corresponds to a word in the vocabulary, and its value is the TF-IDF score for that word in that specific email.
+    The result is typically a sparse matrix (``vector\_matrix'' in the context description).
+\end{itemize}
+
+\textbf{Converting to DataFrame:}
+
+\textbf{vector\_df = pd.DataFrame(vector\_matrix.toarray(), columns=vectorizer.get\_feature\_names\_out())}: This line converts the numerical representation into a more readable pandas DataFrame.
+\begin{itemize}
+    \item ``vector\_matrix.toarray()'': The TF-IDF process often returns a sparse matrix (efficient for storing data with many zeros).
+    This method converts it into a standard dense NumPy array.
+    \item ``pd.DataFrame(\ldots)'': This creates a pandas DataFrame from the dense array.
+    \item ``columns=vectorizer.get\_feature\_names\_out()'': This sets the column names of the new DataFrame (``vector\_df'') to be the actual words (features) that the vectorizer learned during the ``fit'' step.
+\end{itemize}
+This DataFrame (``vector\_df'') now holds the vectorized data, where each row represents an email, each column represents a unique word (feature), and the cell values are the TF-IDF scores.
+
+\textbf{Previewing the Result:}
+
+\textbf{vector\_df.head()}: This line calls the ``head()'' method on the newly created ``vector\_df'' DataFrame.
+It displays the first few rows (typically 5) of the DataFrame, allowing for a quick inspection of the vectorized data structure and the TF-IDF values.
+
+The values in the cells represent the TF-IDF score, indicating the calculated importance of each word (column) in each email (row), considering both its frequency in that email and its rarity across all emails.
+This numerical representation is the final input format used for training machine learning models for tasks like spam detection.

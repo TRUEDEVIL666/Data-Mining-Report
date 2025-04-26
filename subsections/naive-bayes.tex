@@ -1,0 +1,149 @@
+Naive Bayes is a family of simple, probabilistic, supervised machine learning algorithms used primarily for classification tasks, though it can be adapted for other purposes.
+It is based on Bayes’ Theorem and assumes that features are conditionally independent given the class label (the ``naive'' assumption).
+Despite this simplifying assumption, Naive Bayes performs surprisingly well in many real-world applications, especially in text classification and spam filtering.
+
+The core idea is: Given a set of features, predict the most likely class by calculating probabilities based on prior observations.
+
+\subsubsection{Basic Components}
+
+\begin{itemize}
+    \item \textbf{Training Data}:
+        \[D = \{(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\}\]
+        where $x_i = (x_{i1}, x_{i2}, \dots, x_{id}) \in \mathbb{R}^d$ is a feature vector with d dimensions, and $y_i \in \{C_1, C_2, \dots, C_k\}$ is a class label from k classes.
+    \item \textbf{Bayes' Theorem}: The foundation for calculating probabilities of classes given features.
+    \item \textbf{Conditional Independence Assumption}: Assumes that features $x_{i1}, x_{i2}, \dots, x_{id}$ are independent given the class $y$.
+    \item \textbf{Prior Probability}: The probability of each class before observing the features.
+    \item \textbf{Likelihood}: The probability of observing the features given a class.
+    \item \textbf{Posterior Probability}: The probability of a class given the observed features, which is used for prediction.
+    \item \textbf{Smoothing}: A technique (e.g., Laplace smoothing) to handle zero probabilities for unseen feature-class combinations.
+\end{itemize}
+
+\subsubsection{Detailed Algorithm}
+
+Here are the steps to implement and use the Naive Bayes algorithm:
+
+\begin{enumerate}[label=Step \arabic*:, align=left, leftmargin=20pt,labelsep=1em]
+    \item Data Preparation
+    \begin{itemize}
+        \item Prepare the dataset $D$, where each sample has features $x_i$ and a class label $y_i$.
+        \item For categorical features, Naive Bayes is straightforward.
+        For continuous features, assume a distribution (e.g., Gaussian) or discretize the data.
+    \end{itemize}
+
+    \item Training (Model Building)
+    \begin{itemize}
+        \item Estimate Prior Probabilities: Calculate the probability of each class $C_j$:
+        \[P(C_j) = \frac{\text{Number of samples with class } C_j}{\text{Total number of samples}}\]
+
+        \item Estimate Likelihoods: For each feature $x_m$ and class $C_j$, compute the conditional probability $P(x_m | C_j)$:
+        \begin{itemize}
+            \item Categorical Features: Use frequency counts.
+            \item Continuous Features: Assume a distribution (e.g., Gaussian) and estimate parameters (mean, variance).
+            \item Apply smoothing (e.g., Laplace smoothing) to avoid zero probabilities.
+        \end{itemize}
+
+        \item Store these probabilities for use during prediction.
+    \end{itemize}
+
+    \item Prediction
+    \begin{itemize}
+        \item For a new input $x = (x_1, x_2, \dots, x_d)$:
+        \begin{enumerate}
+            \item Compute the posterior probability for each class $C_j$ using Bayes' Theorem:
+                \[P(C_j | x) \propto P(C_j) \prod_{m=1}^d P(x_m | C_j)\]
+                (The proportionality $\propto$ is used because the denominator P(x) is constant across classes.)
+
+            \item Predict the class with the highest posterior probability:
+                \[\hat{y} = \arg\max_{C_j} P(C_j) \prod_{m=1}^d P(x_m | C_j)\]
+
+            \item Optionally, compute normalized probabilities by dividing by the sum of all class posteriors
+        \end{enumerate}
+    \end{itemize}
+\end{enumerate}
+
+
+\subsubsection{Mathematical Formulas}\text{}
+
+\smallskip
+Naive Bayes is grounded in Bayes' Theorem and the conditional independence assumption.
+Below are the key formulas, explained intuitively.
+
+\textbf{Bayes' Theorem}
+
+For a class $C_j$ and feature vector $x = (x_1, x_2, \dots, x_d)$:
+\[P(C_j | x) = \frac{P(C_j) P(x | C_j)}{P(x)}\]
+
+\begin{itemize}[leftmargin=*] % Start list explaining terms
+    \item $P(C_j | x)$: Posterior probability (probability of class $C_j$ given features $x$).
+    \item $P(C_j)$: Prior probability (probability of class $C_j$ before seeing $x$).
+    \item $P(x | C_j)$: Likelihood (probability of observing $x$ given class $C_j$).
+    \item $P(x)$: Evidence (probability of observing $x$, a normalizing constant).
+\end{itemize}
+
+Since $P(x)$ is the same for all classes, we can ignore it for classification:
+\[P(C_j | x) \propto P(C_j) P(x | C_j)\]
+
+\textbf{Conditional Independence Assumption}
+
+Naive Bayes assumes that features are independent given the class:
+\[P(x | C_j) = P(x_1, x_2, \ldots, x_d | C_j) = \prod_{m=1}^d P(x_m | C_j)\]
+
+\textbf{Intuition:} If you know the class (e.g., ``spam email''), the presence of one feature (e.g., the word ``free'') doesn't affect the probability of another feature (e.g., the word ``win'').
+This is often unrealistic but simplifies calculations.
+
+\smallskip
+\textbf{Prior Probability}
+\[P(C_j) = \frac{\text{Count}(y = C_j)}{N}\]
+where $\text{Count}(y = C_j)$ is the number of samples with class $C_j$, and $N$ is the total number of samples.
+
+\smallskip
+\textbf{Likelihood}
+
+\begin{itemize}
+    \item Categorical Features:
+        \[P(x_m = v | C_j) = \frac{\text{Count}(x_m = v, y = C_j)}{\text{Count}(y = C_j)}\]
+        where $v$ is a specific value of feature $x_m$.
+
+    \item Laplace Smoothing: To avoid zero probabilities:
+        \[P(x_m = v | C_j) = \frac{\text{Count}(x_m = v, y = C_j) + \alpha}{\text{Count}(y = C_j) + \alpha \cdot |\text{Values}(x_m)|}\]
+        where $\alpha$ (e.g., 1) is the smoothing parameter, and $|\text{Values}(x_m)|$ is the number of possible values for $x_m$.
+
+    \item Continuous Features (Gaussian Naive Bayes): Assume feature $x_m$ follows a Gaussian distribution for class $C_j$:
+          \[P(x_m | C_j) = \frac{1}{\sqrt{2\pi \sigma^2_{mj}}} \exp\left( -\frac{(x_m - \mu_{mj})^2}{2\sigma^2_{mj}} \right)\]
+          where:
+    \begin{itemize}
+        \item $\mu_{mj}$: Mean of feature $x_m$ for class $C_j$.
+        \item $\sigma^2_{mj}$: Variance of feature $x_m$ for class $C_j$.
+    \end{itemize}
+\end{itemize}
+
+\smallskip
+\textbf{Error Metrics}
+\begin{itemize}
+    \item Classification Error:
+        \[\text{Error} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} I(\hat{y}_i \neq y_i)\]
+
+    \item Log Loss (if probabilities are used):
+        \[\text{Log Loss} = -\frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} \sum_{j=1}^{k} I(y_i = C_j) \log P(C_j | x_i)\]
+\end{itemize}
+
+
+\subsubsection{Advantages}
+
+\smallskip
+\begin{itemize}
+    \item Simple and Fast: Easy to implement and computationally efficient, especially for training.
+    \item Effective with Small Datasets: Performs well even with limited data, unlike complex models.
+    \item Handles High-Dimensional Data: Common in text classification (e.g., bag-of-words models).
+    \item Probabilistic Output: Provides probability estimates for each class, useful for decision-making.
+    \item Robust to Irrelevant Features: The independence assumption mitigates the impact of irrelevant features.
+\end{itemize}
+
+\subsubsection{Disadvantages}
+\begin{itemize}
+    \item Naive Assumption: The conditional independence assumption is often unrealistic, leading to suboptimal performance when features are correlated.
+    \item Sensitive to Zero Probabilities: Requires smoothing to handle unseen feature-class combinations.
+    \item Poor with Continuous Features: Gaussian assumptions may not fit all data distributions.
+    \item Outperformed by Complex Models: Often less accurate than SVM or Random Forest on complex datasets.
+    \item Imbalanced Data Issues: May favor majority classes without proper adjustments.
+\end{itemize}

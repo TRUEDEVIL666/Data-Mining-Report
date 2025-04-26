@@ -1,0 +1,138 @@
+KNN is a simple, non-parametric, and instance-based supervised machine learning algorithm used for both classification and regression.
+It works by finding the K closest data points (neighbors) to a new input in the feature space and making a prediction based on their labels (for classification) or values (for regression).
+KNN is often described as a ``lazy learning'' algorithm because it does not build an explicit model during training; instead, it stores the training data and performs calculations at prediction time.
+
+The core idea is: ``A point is likely to belong to the same class (or have a similar value) as its nearest neighbors.''
+
+\subsubsection{Basic Components}\text{}
+
+\smallskip
+\textbf{Training Data}: The entire dataset
+    \[D = {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}\]
+    where $x_i \in \mathbb{R}^d$ is a feature vector with $d$ dimensions, and $y_i$ is the label (for classification, e.g., $y_i \in \{0,1\}$) or value (for regression, e.g., $y_i \in \mathbb{R}$)
+
+\textbf{Distance Metric}: A function to measure the ``closeness'' between points, typically Euclidean distance.
+
+\smallskip
+\subsubsection{Detailed Algorithm}\text{}
+
+Here are the steps to implement and use the KNN algorithm:
+
+\begin{enumerate}[label=Step \arabic*:, align=left, leftmargin=20pt,labelsep=1em]
+    \item Data Preparation
+    \begin{itemize}
+        \item Prepare the dataset
+            \[D = \{(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\}\]
+            where $x_i$ are feature vectors and $y_i$ are labels (classification) or continuous values (regression).
+        \item Normalize or standardize features, as KNN relies on distance calculations, and differing feature scales can skew results.
+    \end{itemize}
+
+    \item Choose Parameters
+    \begin{itemize}
+        \item Select $K$, the number of neighbors to consider.
+        \item Choose a \textbf{distance metric} (e.g., Euclidean, Manhattan).
+        \item \textbf{For classification}, decide on a voting method (e.g., majority voting or weighted voting).
+        \item \textbf{For regression}, decide on an aggregation method (e.g., mean or weighted mean).
+    \end{itemize}
+
+    \item Prediction
+    \begin{itemize}
+        \item For a new input $x$:
+        \begin{enumerate}
+            \item Compute the distance between $x$ and all points $x_i$ in the training set using the chosen distance metric.
+            \item Identify the K nearest neighbors (the $K$ points with the smallest distances).
+            \item \textbf{Classification}: Predict the class by majority voting among the $K$ neighbors' labels.
+            \item \textbf{Regression}: Predict the value by averaging the $K$ neighbors' values (or using a weighted average).
+        \end{enumerate}
+        \item Weighted KNN: Assign weights to neighbors based on their distance (e.g., inverse distance), giving closer neighbors more influence.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Mathematical Formulas}\text{}
+
+\smallskip
+KNN's mathematics is centered around \textbf{distance calculations} and \textbf{aggregation} of neighbors' outputs.
+Below are the key formulas:
+
+\begin{itemize}
+    \item Euclidean Distance (L2 Norm):
+        \[d(x, x_i) = \sqrt{\sum_{j=1}^d (x_j - x_{i,j})^2}\]
+        where $x_j$ and $x_{i,j}$ are the $j$-th features of points $x$ and $x_i$, and $d$ is the number of features.
+
+    \item Manhattan Distance (L1 Norm):
+        \[d(x, x_i) = \sum_{j=1}^d |x_j - x_{i,j}|\]
+
+    \item Minkowski Distance (Generalization):
+        \[d(x, x_i) = \left( \sum_{j=1}^d |x_j - x_{i,j}|^p \right)^{1/p}\]
+
+    \begin{itemize}
+        \item $p = 2$: Euclidean distance.
+        \item $p = 1$: Manhattan distance.
+    \end{itemize}
+
+    \item Cosine Similarity (for high-dimensional data):
+        \[d(x, x_i) = 1 - \text{cosine similarity} = 1 - \frac{x \cdot x_i}{\|x\| \|x_i\|}\]
+
+    \item Weighted Distance (if features have different importance):
+        \[d(x, x_i) = \sqrt{\sum_{j=1}^d w_j (x_j - x_{i,j})^2}\]
+        where $w_j$ is the weight for feature $j$.
+\end{itemize}
+
+\smallskip
+\textbf{Classification Prediction}
+
+\begin{itemize}
+    \item Majority Voting:
+        \[\hat{y} = \text{mode}(y_{i1}, y_{i2}, \dots, y_{iK})\]
+        where $y_{i1}, \dots, y_{iK}$ are the labels of the $K$ nearest neighbors.
+
+    \item Weighted Voting:
+        \[\hat{y} = \arg\max_c \sum_{i \in \text{KNN}} w_i I(y_i = c)\]
+        where:
+    \begin{itemize}
+        \item $w_i = \frac{1}{d(x, x_i)}$ (inverse distance) or another weighting function.
+        \item $I(y_i = c) = 1$ if $y_i = c$, else 0.
+        \item $c$ is a class label.
+    \end{itemize}
+\end{itemize}
+
+\smallskip
+\textbf{Regression Prediction}
+
+\begin{itemize}
+    \item Mean:
+        \[\hat{y} = \frac{1}{K} \sum_{i \in \text{KNN}} y_i\]
+
+    \item Weighted Mean:
+        \[\hat{y} = \frac{\sum_{i \in \text{KNN}} w_i y_i}{\sum_{i \in \text{KNN}} w_i}\]
+        where $w_i = \frac{1}{d(x, x_i)}$ or similar.
+\end{itemize}
+
+\smallskip
+\textbf{Error Metrics}
+\begin{itemize}
+    \item Classification Error:
+        \[\text{Error} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} I(\hat{y}_i \neq y_i)\]
+
+    \item Regression Error (Mean Squared Error):
+        \[\text{MSE} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} (\hat{y}_i - y_i)^2\]
+\end{itemize}
+
+\subsubsection{Advantages}
+
+\begin{itemize}
+    \item Simple and Intuitive: Easy to understand and implement.
+    \item No Training Phase: No model is built, making it flexible for dynamic datasets.
+    \item Non-Parametric: Makes no assumptions about data distribution, effective for non-linear patterns.
+    \item Versatile: Works for both classification and regression.
+    \item Robust to Multimodal Data: Can handle complex decision boundaries.
+\end{itemize}
+
+\subsubsection{Disadvantages}
+\begin{itemize}
+    \item Computationally Expensive at Prediction Time: Requires calculating distances to all training points ($O(Nd)$ per prediction, where $N$ is the number of samples, $d$ is the number of features).
+    \item Memory-Intensive: Stores the entire training dataset.
+    \item Sensitive to Noise and Outliers: Noisy points can skew predictions.
+    \item Curse of Dimensionality: Performance degrades in high-dimensional spaces due to sparse data.
+    \item Requires Feature Scaling: Distances are sensitive to feature scales.
+\end{itemize}
