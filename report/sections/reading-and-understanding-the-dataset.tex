@@ -1,0 +1,39 @@
+After defining the business goals and the goals of data mining in the Business Understanding phase, the next crucial step in the CRISP-DM process is Data Understanding.
+This phase involves collecting the initial dataset, examining its structure, and verifying data quality.
+The primary goal is to become familiar with the dataset, identify potential quality issues, and extract early insights.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/dataset_information}
+    \caption{Dataset Information}
+    \label{fig:dataset_information}
+\end{figure}
+
+In this image, we can see that out of all 5679 text values which included email headers, subjects and the likes, 5329 of them are unique values.
+From this information, we can learn that the dataset has a large variety of values, and no duplicates are missing values that may impact the quality of the dataset significantly in any way.
+
+Various NLP techniques were applied to explore the email content:
+
+\subsection{Word Cloud}
+\label{subsec:word-cloud}
+\input{subsections/visualizing_the_data/word-cloud}
+
+\subsection{Word Frequency (Top 10)}
+\label{subsec:word-frequency}
+\input{subsections/visualizing_the_data/word-frequency}
+
+\subsection{Email Length Distribution}
+\label{subsec:email-length-distribution}
+\input{subsections/visualizing_the_data/email-length-distribution}
+
+\subsection{Common N-grams (Trigrams)}
+\label{subsec:common-n-grams}
+\input{subsections/visualizing_the_data/common-n-grams}
+
+\subsection{POS Tag Frequency}
+\label{subsec:pos-tag-frequency}
+\input{subsections/visualizing_the_data/pos-tag-frequency}
+
+\subsection{TF-IDF Visualization (Top 20)}
+\label{subsec:tf-idf-visualization}
+\input{subsections/visualizing_the_data/tf-idf-visualization}

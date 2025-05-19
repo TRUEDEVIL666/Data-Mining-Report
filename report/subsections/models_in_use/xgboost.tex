@@ -67,13 +67,19 @@ The goal is to minimize a loss function plus regularization:
     \item $\ell(y_i, \hat{y}_i)$: Loss function measuring the error between true label $y_i$ and prediction $\hat{y}_i$.
     \begin{itemize}
         \item Regression (MSE):
-            \[\ell(y_i, \hat{y}_i) = \frac{1}{2}(y_i - \hat{y}_i)^2\]
+        \[
+            \ell(y_i, \hat{y}_i) = \frac{1}{2}(y_i - \hat{y}_i)^2
+        \]
         \item Classification (Log Loss):
-            \[\ell(y_i, \hat{y}_i) = -[y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)]\]
+        \[
+            \ell(y_i, \hat{y}_i) = -[y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)]
+        \]
     \end{itemize}
 
     \item $\Omega(f_t)$: Regularization term for tree $t$:
-    \[\Omega(f_t) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2 + \alpha \sum_{j=1}^T |w_j|\]
+    \[
+        \Omega(f_t) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2 + \alpha \sum_{j=1}^T |w_j|
+    \]
     \begin{itemize}
         \item $T$: Number of leaves in the tree.
         \item $w_j$: Leaf weight (output value of leaf $j$).
@@ -87,11 +93,15 @@ The goal is to minimize a loss function plus regularization:
 \textbf{Gradient Boosting}
 
 Predictions are the sum of outputs from T trees:
-\[\hat{y}_i = \sum_{t=1}^T f_t(x_i)\]
+\[
+    \hat{y}_i = \sum_{t=1}^T f_t(x_i)
+\]
 where $f_t(x_i)$ is the output of tree $t$ for sample $x_i$.
 
 At iteration t, the prediction is:
-\[\hat{y}_i^{(t)} = \hat{y}_i^{(t-1)} + \eta f_t(x_i)\]
+\[
+    \hat{y}_i^{(t)} = \hat{y}_i^{(t-1)} + \eta f_t(x_i)
+\]
 
 \begin{itemize}
     \item $\eta$: Learning rate (shrinks the contribution of each tree to prevent overfitting).
@@ -103,17 +113,17 @@ At iteration t, the prediction is:
 For each sample i, compute:
 \begin{itemize}
     \item Gradient (first derivative): $g_i = \frac{\partial \ell(y_i, \hat{y}_i^{(t-1)})}{\partial \hat{y}_i^{(t-1)}}$
-          \begin{itemize}
-              \item For MSE: $g_i = \hat{y}_i^{(t-1)} - y_i$.
-              \item For log loss: $g_i = \hat{y}_i^{(t-1)} - y_i$, where $\hat{y}_i^{(t-1)}$ is the predicted probability.
-          \end{itemize}
-          \medskip
+    \begin{itemize}
+        \item For MSE: $g_i = \hat{y}_i^{(t-1)} - y_i$.
+        \item For log loss: $g_i = \hat{y}_i^{(t-1)} - y_i$, where $\hat{y}_i^{(t-1)}$ is the predicted probability.
+    \end{itemize}
+    \medskip
     \item Hessian (second derivative): $h_i = \frac{\partial^2 \ell(y_i, \hat{y}_i^{(t-1)})}{\partial (\hat{y}_i^{(t-1)})^2}$
-          % Nested list for specific cases
-          \begin{itemize}
-              \item For MSE: $h_i = 1$.
-              \item For log loss: $h_i = \hat{y}_i^{(t-1)} (1 - \hat{y}_i^{(t-1)})$.
-          \end{itemize}
+    % Nested list for specific cases
+    \begin{itemize}
+        \item For MSE: $h_i = 1$.
+        \item For log loss: $h_i = \hat{y}_i^{(t-1)} (1 - \hat{y}_i^{(t-1)})$.
+    \end{itemize}
 \end{itemize}
 
 These guide the tree to focus on samples with larger errors.
@@ -121,16 +131,22 @@ These guide the tree to focus on samples with larger errors.
 \textbf{Tree Construction}
 
 Each tree is built to minimize:
-\[\text{Obj}^{(t)} = \sum_{i=1}^N [g_i f_t(x_i) + \frac{1}{2} h_i f_t(x_i)^2] + \Omega(f_t)\]
+\[
+    \text{Obj}^{(t)} = \sum_{i=1}^N [g_i f_t(x_i) + \frac{1}{2} h_i f_t(x_i)^2] + \Omega(f_t)
+\]
 
 \textbf{Intuition:} The tree predicts values that reduce the loss (via gradients) while keeping the tree simple (via regularization).
 
 \begin{itemize}
     \item For a leaf $j$ with samples $I_j$, the optimal leaf weight is:
-    \[w_j^* = -\frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda}\]
+    \[
+        w_j^* = -\frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda}
+    \]
 
     \item The gain from splitting a node into left ($I_L$) and right ($I_R$) branches is:
-    \[\text{Gain} = \frac{1}{2} \left[ \frac{(\sum_{i \in I_L} g_i)^2}{\sum_{i \in I_L} h_i + \lambda} + \frac{(\sum_{i \in I_R} g_i)^2}{\sum_{i \in I_R} h_i + \lambda} - \frac{(\sum_{i \in I} g_i)^2}{\sum_{i \in I} h_i + \lambda} \right] - \gamma\]
+    \[
+        \text{Gain} = \frac{1}{2} \left[ \frac{(\sum_{i \in I_L} g_i)^2}{\sum_{i \in I_L} h_i + \lambda} + \frac{(\sum_{i \in I_R} g_i)^2}{\sum_{i \in I_R} h_i + \lambda} - \frac{(\sum_{i \in I} g_i)^2}{\sum_{i \in I} h_i + \lambda} \right] - \gamma
+    \]
     \begin{itemize}
         \item Split if Gain $> 0$, choosing the feature and threshold that maximizes Gain.
     \end{itemize}
@@ -140,10 +156,14 @@ Each tree is built to minimize:
 
 \begin{itemize}
     \item Regression:
-    \[\hat{y}_i = \sum_{t=1}^T f_t(x_i)\]
+    \[
+        \hat{y}_i = \sum_{t=1}^T f_t(x_i)
+    \]
 
     \item Classification (Binary):
-    \[\hat{y}_i = \sigma \left( \sum_{t=1}^T f_t(x_i) \right)\]
+    \[
+        \hat{y}_i = \sigma \left( \sum_{t=1}^T f_t(x_i) \right)
+    \]
     where $\sigma(z) = \frac{1}{1+e^{-z}}$ is the sigmoid function for probability output.
 \end{itemize}
 

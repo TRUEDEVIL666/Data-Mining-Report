@@ -8,12 +8,13 @@ The core idea is: ``A point is likely to belong to the same class (or have a sim
 
 \smallskip
 \textbf{Training Data}: The entire dataset
-    \[D = {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}\]
-    where $x_i \in \mathbb{R}^d$ is a feature vector with $d$ dimensions, and $y_i$ is the label (for classification, e.g., $y_i \in \{0,1\}$) or value (for regression, e.g., $y_i \in \mathbb{R}$)
+\[D = {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}\]
+where $x_i \in \mathbb{R}^d$ is a feature vector with $d$ dimensions, and $y_i$ is the label (for classification, e.g., $y_i \in \{0,1\}$) or value (for regression, e.g., $y_i \in \mathbb{R}$)
 
 \textbf{Distance Metric}: A function to measure the ``closeness'' between points, typically Euclidean distance.
 
 \smallskip
+
 \subsubsection{Detailed Algorithm}\text{}
 
 Here are the steps to implement and use the KNN algorithm:
@@ -22,8 +23,8 @@ Here are the steps to implement and use the KNN algorithm:
     \item Data Preparation
     \begin{itemize}
         \item Prepare the dataset
-            \[D = \{(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\}\]
-            where $x_i$ are feature vectors and $y_i$ are labels (classification) or continuous values (regression).
+        \[D = \{(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\}\]
+        where $x_i$ are feature vectors and $y_i$ are labels (classification) or continuous values (regression).
         \item Normalize or standardize features, as KNN relies on distance calculations, and differing feature scales can skew results.
     \end{itemize}
 
@@ -56,14 +57,14 @@ Below are the key formulas:
 
 \begin{itemize}
     \item Euclidean Distance (L2 Norm):
-        \[d(x, x_i) = \sqrt{\sum_{j=1}^d (x_j - x_{i,j})^2}\]
-        where $x_j$ and $x_{i,j}$ are the $j$-th features of points $x$ and $x_i$, and $d$ is the number of features.
+    \[d(x, x_i) = \sqrt{\sum_{j=1}^d (x_j - x_{i,j})^2}\]
+    where $x_j$ and $x_{i,j}$ are the $j$-th features of points $x$ and $x_i$, and $d$ is the number of features.
 
     \item Manhattan Distance (L1 Norm):
-        \[d(x, x_i) = \sum_{j=1}^d |x_j - x_{i,j}|\]
+    \[d(x, x_i) = \sum_{j=1}^d |x_j - x_{i,j}|\]
 
     \item Minkowski Distance (Generalization):
-        \[d(x, x_i) = \left( \sum_{j=1}^d |x_j - x_{i,j}|^p \right)^{1/p}\]
+    \[d(x, x_i) = \left( \sum_{j=1}^d |x_j - x_{i,j}|^p \right)^{1/p}\]
 
     \begin{itemize}
         \item $p = 2$: Euclidean distance.
@@ -71,11 +72,11 @@ Below are the key formulas:
     \end{itemize}
 
     \item Cosine Similarity (for high-dimensional data):
-        \[d(x, x_i) = 1 - \text{cosine similarity} = 1 - \frac{x \cdot x_i}{\|x\| \|x_i\|}\]
+    \[d(x, x_i) = 1 - \text{cosine similarity} = 1 - \frac{x \cdot x_i}{\|x\| \|x_i\|}\]
 
     \item Weighted Distance (if features have different importance):
-        \[d(x, x_i) = \sqrt{\sum_{j=1}^d w_j (x_j - x_{i,j})^2}\]
-        where $w_j$ is the weight for feature $j$.
+    \[d(x, x_i) = \sqrt{\sum_{j=1}^d w_j (x_j - x_{i,j})^2}\]
+    where $w_j$ is the weight for feature $j$.
 \end{itemize}
 
 \smallskip
@@ -83,12 +84,12 @@ Below are the key formulas:
 
 \begin{itemize}
     \item Majority Voting:
-        \[\hat{y} = \text{mode}(y_{i1}, y_{i2}, \dots, y_{iK})\]
-        where $y_{i1}, \dots, y_{iK}$ are the labels of the $K$ nearest neighbors.
+    \[\hat{y} = \text{mode}(y_{i1}, y_{i2}, \dots, y_{iK})\]
+    where $y_{i1}, \dots, y_{iK}$ are the labels of the $K$ nearest neighbors.
 
     \item Weighted Voting:
-        \[\hat{y} = \arg\max_c \sum_{i \in \text{KNN}} w_i I(y_i = c)\]
-        where:
+    \[\hat{y} = \arg\max_c \sum_{i \in \text{KNN}} w_i I(y_i = c)\]
+    where:
     \begin{itemize}
         \item $w_i = \frac{1}{d(x, x_i)}$ (inverse distance) or another weighting function.
         \item $I(y_i = c) = 1$ if $y_i = c$, else 0.
@@ -101,21 +102,21 @@ Below are the key formulas:
 
 \begin{itemize}
     \item Mean:
-        \[\hat{y} = \frac{1}{K} \sum_{i \in \text{KNN}} y_i\]
+    \[\hat{y} = \frac{1}{K} \sum_{i \in \text{KNN}} y_i\]
 
     \item Weighted Mean:
-        \[\hat{y} = \frac{\sum_{i \in \text{KNN}} w_i y_i}{\sum_{i \in \text{KNN}} w_i}\]
-        where $w_i = \frac{1}{d(x, x_i)}$ or similar.
+    \[\hat{y} = \frac{\sum_{i \in \text{KNN}} w_i y_i}{\sum_{i \in \text{KNN}} w_i}\]
+    where $w_i = \frac{1}{d(x, x_i)}$ or similar.
 \end{itemize}
 
 \smallskip
 \textbf{Error Metrics}
 \begin{itemize}
     \item Classification Error:
-        \[\text{Error} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} I(\hat{y}_i \neq y_i)\]
+    \[\text{Error} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} I(\hat{y}_i \neq y_i)\]
 
     \item Regression Error (Mean Squared Error):
-        \[\text{MSE} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} (\hat{y}_i - y_i)^2\]
+    \[\text{MSE} = \frac{1}{N_{\text{test}}} \sum_{i=1}^{N_{\text{test}}} (\hat{y}_i - y_i)^2\]
 \end{itemize}
 
 \subsubsection{Advantages}
