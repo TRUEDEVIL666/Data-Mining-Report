@@ -22,6 +22,7 @@ Each tree is built independently on a data subset.
 \textbf{Random Feature Subset}: At each node, only a random subset of features is evaluated for the best split.
 
 \smallskip
+
 \subsubsection{Detailed Algorithm}\text{}
 
 \begin{enumerate}[label=Step \arabic*:, align=left, leftmargin=20pt,labelsep=1em]
@@ -43,7 +44,7 @@ Each tree is built independently on a data subset.
             \item Initialize a decision tree: Trees are grown fully without pruning.
             \item At each node:
             \begin{itemize}
-                \item Randomly select a subset of $m$ features from the total $M$ features ($m \textless M$). Typically:
+                \item Randomly select a subset of $m$ features from the total $M$ features ($m < M$). Typically:
                 \begin{itemize}
                     \item For classification: $m = \sqrt{M}$
                     \item For regression: $m = M/3$
@@ -79,6 +80,7 @@ Each tree is built independently on a data subset.
 \end{enumerate}
 
 \smallskip
+
 \subsubsection{Mathematical Formulas}\text{}
 
 There are splitting criteria at each node in the tree, and it is different for each task.
@@ -86,24 +88,25 @@ There are splitting criteria at each node in the tree, and it is different for e
 \textbf{For Classification:}
 \begin{itemize}
     \item Gini Index:
-        \[Gini = 1 - \sum_{i=1}^C{p_i^2}\]
-        where $p_i$ is the proportion of class $i$ in the node.
+    \[Gini = 1 - \sum_{i=1}^C{p_i^2}\]
+    where $p_i$ is the proportion of class $i$ in the node.
     \item Entropy:
-        \[Entropy = - \sum_{i=1}^C{p_i \log_2{p_i}}\]
+    \[Entropy = - \sum_{i=1}^C{p_i \log_2{p_i}}\]
     \item Final Result:
-        \[\hat{y} = mode(\hat{y}_1, \hat{y}_2, \ldots, \hat{y}_t)\]
-        where $\hat{y}_t$ is the prediction from a tree $t$.
+    \[\hat{y} = mode(\hat{y}_1, \hat{y}_2, \ldots, \hat{y}_t)\]
+    where $\hat{y}_t$ is the prediction from a tree $t$.
 \end{itemize}
 
 \textbf{For Regression:}
 \begin{itemize}
     \item Splitting criterion: Minimize Mean Squared Error:
-        \[MSE = \frac{1}{n} \sum_{i=1}^n{(y_i - \hat{y}_i)^2}\]
+    \[MSE = \frac{1}{n} \sum_{i=1}^n{(y_i - \hat{y}_i)^2}\]
     \item Final Result:
-        \[\hat{y} = \frac{1}{T} \sum_{t=1}^T{\hat{y}_t}\]
+    \[\hat{y} = \frac{1}{T} \sum_{t=1}^T{\hat{y}_t}\]
 \end{itemize}
 
 \smallskip
+
 \subsubsection{Advantages}
 
 \begin{itemize}
@@ -115,6 +118,7 @@ There are splitting criteria at each node in the tree, and it is different for e
 \end{itemize}
 
 \smallskip
+
 \subsubsection{Disadvantages}
 
 \begin{itemize}

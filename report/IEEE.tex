@@ -11,6 +11,7 @@
 \usepackage{nohyperref}
 \usepackage{amstex}
 \usepackage{enumitem}
+\usepackage{float}
 \newcommand{\BibTeX}{\textrm{B \kern -.05em \textsc{i \kern -.025em b} \kern -.08em
 T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 \begin{document}
@@ -55,7 +56,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
             \textit{Faculty of Information Technology} \\
             \textit{Ton Duc Thang University}\\
             Ho Chi Minh City, Vietnam \\
-            5220136@student.tdtu.edu.vn
+            522H0136@student.tdtu.edu.vn
         }
     }
 
@@ -67,6 +68,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         Overall, this paper goes through the basic understanding of spam emails, understanding the necessity of a spam classification algorithm, and learn more about the methodologies, its effectiveness and usefulness when detecting spam emails.
     \end{abstract}
 
+
     \section{Introduction}
     \label{sec:introduction}
     Since the birth of the Internet, spam email has been a common occurrence.
@@ -75,86 +77,152 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     And with the nature of email spam being sent by botnets, it isn't easy to avoid the situation due to a new bot can be easily created in case another one got blocked or banned on the site.
     A common way how most platforms (such as Gmail, Yahoo!, Outlook) handle these spams is to develop a Machine Learning (ML) model to detect and get rid of the spam emails, lowering the number of spams getting into the inbox.
 
+
     \section{Importance of Spam Classification}
     \label{sec:importance-of-spam-classification}
     \input{sections/importance-of-spam-classification}
 
-    \section{Visualizing the Data}
-    \label{sec:visualizing-the-data}
-    \input{sections/visualizing-the-data}
+
+    \section{Reading and Understanding the Dataset}
+    \label{sec:reading-and-understanding-the-dataset}
+    \input{sections/reading-and-understanding-the-dataset}
+
 
     \section{Preprocessing the data}
     \label{sec:preprocessing-the-data}
     \input{sections/preprocessing-the-data}
 
+
     \section{Models in use}
     \label{sec:models-in-use}
     \input{sections/models-in-use}
+
 
     \section{Evaluations}
     \label{sec:evaluations}
     \input{sections/evaluations}
 
-%    \section{Contribution}
-%    \label{sec:contribution}
-%
-%    The following table represents the contribution of each member, note that whichever member handles whichever task will also write the report for that task.
-%
-%    \begin{table}[h]
-%        \centering
-%        \caption{Members Contributions}
-%        \setlength{\tabcolsep}{2pt} % Reduce column spacing
-%        \renewcommand{\arraystretch}{1} % Adjust row spacing
-%        \resizebox{240}{!}{ % Fit within column width
-%            \begin{tabular}{|l|c|c|c|}
-%                \hline
-%                \textbf{ID} & \textbf{Member} & \textbf{Contribution} & \textbf{Progress}\\
-%                \hline
-%                522H0036 & Luong Canh Phong & Task 1 and Handling Report & 100\%\\
-%                522H0092 & Cao Nguyen Thai Thuan & Overseer and Report Support & 100\%\\
-%                522H0075 & Tang Minh Thien An & Task 3 & 100\%\\
-%                522H0167 & Truong Tri Phong & Task 2 & 100\%\\
-%                \hline
-%            \end{tabular}
-%        }
-%        \label{tab:contributions}
-%    \end{table}
-%
-%    \section{Self-evaluation}
-%    \label{sec:self-evaluation}
-%
-%    The following table is our self-evaluation on our tasks:
-%
-%    \begin{table}[h]
-%        \centering
-%        \caption{Self-evaluation}
-%        \setlength{\tabcolsep}{2pt} % Reduce column spacing
-%        \renewcommand{\arraystretch}{1} % Adjust row spacing
-%        \resizebox{240}{!}{ % Fit within column width
-%            \begin{tabular}{|l|c|c|c|}
-%                \hline
-%                \textbf{Task} & \textbf{Task Requirements} & \textbf{Completion Ratio}\\
-%                \hline
-%                Task 1 & A-Priori Algorithm for Frequent Customers & 100\%\\
-%                Task 2 & PCY Algorithm for Frequent Items & 95\%\\
-%                Task 3 & MinHashLSH for Similar Dates & 90\%\\
-%                Task 4 & Report & 100\%\\
-%                \hline
-%            \end{tabular}
-%        }
-%        \label{tab:self-evaluation}
-%    \end{table}
-%
-%    \section{Conclusion}
-%    \label{sec:conclusion}
-%    We have gone through a variety of techniques and algorithms used in the world of data mining.
-%    For the first task, we have to find same-day customers and utilize the A-Priori algorithm to find frequent pairs of customers that shop on the same date and save the output of each pass in a dedicated folder.
-%    As we run though the code, the result after sorting is a reasonable ascending list of frequent customer pairs.
-%    For the second task, store the given dataset locally and identify baskets, as well as implementing the PCY algorithm to find frequent pairs along with generating metadata with predetermined constraints, the results for this task are two separate lists, one containing all frequent pairs, and the other is a list of association rules based on the user's given support threshold and confidence value.
-%    And finally, implement and compare between a traditional and an alternative MinHashLSH function to understand and have a greater insight into how the frequent pairs searching is done.
-%    We can see that with a slight modification and a different way of merging, it can result in a notably higher efficiency and better results.
-%
-%    \begin{thebibliography}{00}
+
+    \section{Contribution}
+    \label{sec:contribution}
+
+    The following table represents the contribution of each member, note that whichever member handles whichever task will also write the report for that task.
+
+    \begin{table}[h]
+        \centering
+        \caption{Members Contributions}
+        \setlength{\tabcolsep}{2pt} % Reduce column spacing
+        \renewcommand{\arraystretch}{1} % Adjust row spacing
+        \resizebox{240}{!}{ % Fit within column width
+            \begin{tabular}{|l|c|c|c|}
+                \hline
+                \textbf{ID} & \textbf{Member}        & \textbf{Contribution}                         & \textbf{Progress} \\
+                \hline
+                522H0036    & Luong Canh Phong       & Overseer, Implementation and Handling Report  & 100\%             \\
+                520H0341    & Nguyen Thai Bao        & Research and Evaluating Models                & 100\%             \\
+                522H0030    & Le Tan Huy             & Preprocessing the Dataset                     & 100\%             \\
+                522H0008    & Dao Minh Phuc          & Visualizing the Dataset                       & 100\%             \\
+                522H0136    & Nguyen Nhat Phuong Anh & Research Business and Visualizing the Dataset & 100\%             \\
+                \hline
+            \end{tabular}
+        }
+        \label{tab:contributions}
+    \end{table}
+
+
+    \section{Conclusion}
+    \label{sec:conclusion}
+    This paper addressed spam email detection through data preprocessing and the application of several machine learning models.
+    Initial NLP-driven data exploration identified key email characteristics like headers, HTML elements, and spam-related terms, alongside a right-skewed email length distribution, underscoring the need for the implemented robust preprocessing pipeline.
+    Five models—Random Forest, SVM, KNN, Naive Bayes, and XGBoost—were evaluated.
+
+    While all models performed exceptionally well on the training data, with SVM achieving near-perfect scores, the validation dataset provided a clearer picture of generalization.
+    SVM consistently emerged as the most robust model, leading in accuracy (0.9781), precision (0.9272), F1-score (0.9261), and achieving the lowest loss.
+    In contrast, other models, particularly Random Forest and XGBoost, experienced significant drops in precision and overall performance, indicating potential overfitting or sensitivity to data variations.
+    KNN maintained high recall but at the cost of precision, while Naive Bayes showed more stable, albeit moderate, performance.
+
+    The general performance decline from training to validation highlights the critical challenge of overfitting and the necessity of evaluating models on unseen data.
+    SVM's superior generalization capabilities make it a strong candidate for spam classification.
+    This comparative analysis provides valuable insights for model selection in similar tasks.
+    Future directions could involve exploring advanced feature engineering or deep learning approaches.
+
+
+    \begin{thebibliography}{00}
+        \bibitem{b1}
+        \textit{XGBoost Documentation — xgboost 3.0.1 documentation}.
+        (n.d.). https://xgboost.readthedocs.io/
+
+        \bibitem{b2}
+        \textit{scikit-learn: machine learning in Python — scikit-learn 0.16.1 documentation}.
+        (n.d.). https://scikit-learn.org/
+
+        \bibitem{b3}
+        TensorFlow.
+        (n.d.). \textit{TensorFlow}.
+        https://www.tensorflow.org/
+
+        \bibitem{b4}
+        Wikipedia contributors.
+        (2025, April 21). \textit{Cross-entropy}.
+        Wikipedia.
+        https://en.wikipedia.org/wiki/Cross\_entropy\#Cross-entropy\_loss\_function\_and\_logistic\_regression
+
+        \bibitem{b5}
+        Shannon, C. E., \& Weaver, W. (1949).
+        A Mathematical Theory of Communication. \textit{Bell System Technical Journal}, \textit{27}(4), 623–656.
+        https://doi.org/10.1002/j.1538-7305.1948.tb00917.x
+
+        \bibitem{b6}
+        Chen, T., \& Guestrin, C. (2016).
+        XGBoost: a Scalable Tree Boosting System. \textit{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining - KDD ’16}, \textit{1}(1), 785–794.
+        https://doi.org/10.1145/2939672.2939785
+
+        \bibitem{b7}
+        Breiman, L. (2001). \textit{Random Forests}.
+        https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf
+
+        \bibitem{b8}
+        Cortes, C., \& Vapnik, V. (1995).
+        Support-vector networks. \textit{Machine Learning}, \textit{20}(3), 273–297.
+        https://doi.org/10.1007/bf00994018
+
+        \bibitem{b9}
+        \textit{Pattern Recognition and Machine Learning (Information Science and Statistics): Bishop, Christopher M.: 9780387310732: Amazon.com: Books}.
+        (n.d.). https://www.amazon.com/Pattern-Recognition-Machine-Learning-Information/dp/0387310738
+
+        \bibitem{b10}
+        \textit{Elements of Statistical Learning: data mining, inference, and prediction. 2nd Edition.} (n.d.).
+        https://hastie.su.domains/ElemStatLearn/
+
+        \bibitem{b11}
+        \textit{Machine Learning: A Probabilistic Perspective (Adaptive Computation and Machine Learning series): Murphy, Kevin P.: 9780262018029: Amazon.com: Books}.
+        (n.d.). https://www.amazon.com/Machine-Learning-Probabilistic-Perspective-Computation/dp/0262018020
+
+        \bibitem{b12}
+        \textit{Introduction to Machine Learning, fourth edition (Adaptive Computation and Machine Learning series): Alpaydin, Ethem: 9780262043793: Amazon.com: Books}.
+        (n.d.). https://www.amazon.com/Introduction-Machine-Learning-Ethem-Alpaydin/dp/0262043793
+
+        \bibitem{b13}
+        \textit{Data Mining: Concepts and Techniques (The Morgan Kaufmann Series in Data Management Systems): Han, Jiawei, Kamber, Micheline, Pei, Jian: 9780123814791: Amazon.com: Books}.
+        (n.d.). https://www.amazon.com/Data-Mining-Concepts-Techniques-Management/dp/0123814790
+
+        \bibitem{b14}
+        \textit{David MacKay: Information Theory, Inference, and Learning Algorithms: The book}.
+        (n.d.). https://www.inference.org.uk/mackay/itila/book.html
+
+        \bibitem{b15}
+        \textit{Support vector Machines (Information Science and Statistics): Steinwart, Ingo, Christmann, Andreas: 9780387772417: Amazon.com: Books}.
+        (n.d.). https://www.amazon.com/Support-Machines-Information-Science-Statistics/dp/0387772413
+
+        \bibitem{b16}
+        Godoy, D. (2025, March 7). \textit{Understanding binary cross-entropy / log loss: a visual explanation}.
+        Towards Data Science.
+        https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
+
+        \bibitem{b17}
+        Yıldırım, S. (2025, January 18). \textit{K-Nearest Neighbors (KNN) – explained}.
+        Towards Data Science.
+        https://towardsdatascience.com/k-nearest-neighbors-knn-explained\
 %        \bibitem{b12} Tpoint Tech, ``Apriori Algorithm, ''\\\
 %        [Online]. Available: \href{https://www.tpointtech.com/apriori-algorithm}{https://www.tpointtech.com/apriori-algorithm}
 %        \bibitem{b6} Databricks, ``MapReduce, '' Databricks Glossary, 2025.\\\
@@ -167,5 +235,5 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 %        [Online]. Available: \href{https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.feature.MinHashLSH}{https://spark.apache.org/docs/latest/api/python/refer\-ence/api/pyspark.ml.feature.MinHashLSH}
 %        \bibitem{b5} Amazon Web Services, ``Jaccard similarity, '' AWS Neptune Analytics Documentation, 2024.\\\
 %        [Online]. Available: \href{https://docs.aws.amazon.com/neptune-analytics/latest/userguide/jaccard-similarity.html}{https://docs.aws.amazon.com/neptune-analytics/latest/userguide/jaccard-similarity.html}
-%    \end{thebibliography}
+    \end{thebibliography}
 \end{document}

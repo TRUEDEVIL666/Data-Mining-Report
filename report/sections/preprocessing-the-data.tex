@@ -1,1 +1,77 @@
-(TBA)
+\subsection{Preprocessing Methodology}
+\label{subsec:preprocessing-methodology}
+Preprocessing plays a pivotal role in natural language processing (NLP) pipelines, particularly in text classification tasks such as spam email detection.
+The objective is to transform raw and heterogeneous textual inputs into a structured, normalized, and semantically meaningful format that facilitates effective feature extraction and machine learning.
+
+The implemented preprocessing pipeline in this study encompasses the following systematic procedures:
+
+\textbf{Duplicate and Null Removal:} All duplicate entries and rows with missing email content are removed to ensure dataset integrity and eliminate redundant patterns that could skew model training.
+
+\textbf{Placeholder-Based Pattern Normalization:} Regular expressions are employed to detect and replace specific patterns in the email content with standardized placeholders:
+\begin{itemize}
+    \item HTML Tags: Replaced with the placeholder HTML to remove presentation-level markup irrelevant to semantic content.
+    \item URLs: Substituted with URL to generalize link structures that are common in spam but non-specific in nature.
+    \item Email Addresses: Masked using EMAIL\_ADDRESS to prevent the model from learning user- or domain-specific identifiers.
+    \item Numeric Values: Abstracted to NUMBER to normalize quantitative expressions across emails.
+    \item Special Characters: Replaced with SPECIAL\_CHARACTER to reduce lexical variance caused by symbols, punctuation, or encoded text.
+\end{itemize}
+
+\textbf{Text Normalization and Linguistic Filtering:} Using the SpaCy NLP library, the text is tokenized and linguistically normalized:
+\begin{itemize}
+    \item Stopword Removal: Common functional words (e.g., ``is'', ``the'', ``and'') are eliminated as they carry minimal discriminative power.
+    \item Lemmatization: Words are reduced to their base or dictionary form (e.g., ``running'' → ``run'') to consolidate variations of the same term.
+    \item Token Categorization: Non-alphabetic tokens are conditionally replaced based on characteristics (e.g., numeric, symbolic), improving generalizability.
+    \item Retention of Semantic Placeholders: Defined placeholders are retained throughout the pipeline to preserve informative markers (e.g., URL, NUMBER) critical in spam identification.
+\end{itemize}
+
+\textbf{Deduplication of Tokens within Each Email:} To further reduce token redundancy, duplicate words within individual emails are removed while preserving their first occurrence order.
+This reduces overemphasis on repeated terms often used in spam to attract attention (e.g., “FREE FREE FREE”).
+
+\subsection{Justification and Rationale}
+\label{subsec:justification-and-rationale}
+The preprocessing strategy is grounded in established NLP practices that aim to:
+\begin{itemize}
+    \item Minimize Noise: By filtering out irrelevant structures and symbols, the input data is denoised, enhancing signal clarity for classification.
+    \item Standardize Lexical Patterns: Using placeholders ensures consistent representation of frequently variable components (e.g., URLs, email addresses), improving model robustness across domains.
+    \item Reduce Dimensionality: Stopword removal, lemmatization, and token deduplication contribute to a more compact feature space, decreasing computational overhead and mitigating overfitting.
+    \item Preserve Discriminative Features: Semantic placeholders and lemmatized content ensure that key spam indicators remain detectable by the model.
+\end{itemize}
+
+\subsection{Expected Impact}
+\label{subsec:expected-impact}
+The outcome of the preprocessing pipeline is a refined dataset composed of semantically informative, structurally consistent email content.
+This transformation is essential for:
+\begin{itemize}
+    \item Enhancing feature extraction techniques such as TF-IDF vectorization.
+    \item Improving the performance, generalization, and interpretability of downstream machine learning models.
+    \item Enabling more accurate and efficient spam classification, especially when handling diverse and noisy real-world email data.
+\end{itemize}
+
+\subsection{Feature Representation using TF-IDF Vectorization}
+\label{subsec:feature-representation-using-tf-idf-vectorization}
+Feature extraction is a crucial step in transforming preprocessed text into a numerical format suitable for machine learning algorithms.
+In this study, we apply Term Frequency-Inverse Document Frequency (TF-IDF) vectorization to encode textual information into structured numerical vectors.
+
+\subsection{Vectorization Configuration}
+\label{subsec:vectorization-configuration}
+The TF-IDF vectorizer was configured with the following parameters to optimize the feature space for the classification task:
+
+\begin{itemize}
+    \item lowercase=False: Preserves the casing of tokens, enabling differentiation between certain placeholder tokens (e.g., EMAIL\_ADDRESS, HTML) and regular terms.
+    \item min\_df=80: Filters out tokens that appear in fewer than 80 documents.
+    This threshold eliminates infrequent noise terms while retaining commonly occurring features.
+    \item max\_features=1000: Restricts the final feature set to the top 1,000 most informative terms (by TF-IDF ranking), thereby reducing dimensionality and computational complexity.
+\end{itemize}
+
+An optional vocabulary parameter (commented in the code) can be used to explicitly preserve semantically relevant placeholders introduced during preprocessing.
+
+\subsection*{Transformation Process}
+The vectorizer is trained (fit) on the preprocessed email corpus and applied (transform) to convert each email into a sparse numerical vector.
+These vectors are then converted to a dense array and formatted into a structured DataFrame (vector\_df) where:
+
+\begin{itemize}
+    \item Rows represent individual emails.
+    \item Columns correspond to TF-IDF-weighted tokens.
+\end{itemize}
+
+This matrix serves as the input feature set for the downstream machine learning classifiers.
