@@ -1,12 +1,12 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{images/models_performance_validating}
-    \caption{}
+    \caption{Comparison of Models' Performance on Validating Dataset}
     \label{fig:models_performance_validating}
 \end{figure}
 
 \begin{itemize}
-    \item \textbf{General Trend Compared to Previous (Assumed Training) Data:}
+    \item \textbf{General Trend Compared to Previous Data:}
     \begin{itemize}
         \item A significant drop in performance is observed across all models and most metrics (Accuracy, Precision, F1 Score) when comparing to the previously analyzed dataset (which had near-perfect scores). Recall scores are somewhat more varied, with some models maintaining high recall. Loss values have generally increased.
         \item This substantial decrease strongly suggests that the models may have overfit to the previous dataset, or that this new dataset presents a more challenging distribution, is inherently more complex, or has a different class balance. The previous high scores might not have been indicative of true generalization capability.
